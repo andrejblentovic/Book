@@ -35,10 +35,10 @@
     --ios-separator: rgba(60,58,45,0.16);
     --ios-fill: rgba(110,106,88,0.10);
     --ios-fill-strong: rgba(110,106,88,0.18);
-    --ios-blue: #A34F1D;
+    --ios-blue: #1E6B6E;
     --ios-red: #B3362B;
-    --ios-tint: #A34F1D;
-    --ios-tint-soft: rgba(163,79,29,0.12);
+    --ios-tint: #1E6B6E;
+    --ios-tint-soft: rgba(30,107,110,0.12);
     --ios-gold: #C99A46;
     --ios-navbar-bg: rgba(244,241,234,0.82);
     --ios-sheet-bg: #FBF9F4;
@@ -76,12 +76,12 @@
     --font-body: var(--serif);
   }
   html[data-theme="modern"]{
-    --page-bg: #FFFFFF;
-    --page-bg-2: #F4F4F6;
-    --ink: #17171A;
-    --ink-soft: #6C6C74;
-    --line: rgba(20,20,25,0.10);
-    --shadow: rgba(15,15,20,0.32);
+    --page-bg: #F7F4EE;
+    --page-bg-2: #EFEBE2;
+    --ink: #2B2A26;
+    --ink-soft: #756F63;
+    --line: rgba(43,42,38,0.10);
+    --shadow: rgba(30,28,20,0.28);
     --font-body: var(--sf);
   }
   html[data-theme="sepia"]{
@@ -373,7 +373,7 @@
         </div>
       </div>
       <textarea class="textinput" id="input-text" placeholder="Text hier einfügen oder eintippen…"></textarea>
-      <div style="font-size:11px; color:var(--ios-secondary); padding:6px 2px 0; line-height:1.4;">Tipp: Tippe "➕ Seitenumbruch" an der Stelle, an der eine neue Seite beginnen soll — oder schreib selbst eine Zeile mit nur <code>---</code>.</div>
+      <div style="font-size:11px; color:var(--ios-secondary); padding:6px 2px 0; line-height:1.4;">Tipp: Tippe "➕ Seitenumbruch" an der Stelle, an der eine neue Seite beginnen soll — oder schreib selbst eine Zeile mit nur <code>===</code>.</div>
       <div class="row-end">
         <button class="bigbtn" id="btn-save-text">Als Buch sichern</button>
       </div>
@@ -460,7 +460,7 @@
     </div>
     <div class="panel active" style="padding:10px 16px 18px;">
       <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:8px;">
-        <div style="font-size:11px; color:var(--ios-secondary); line-height:1.4;">Zeile mit nur <code>---</code> = neue Seite</div>
+        <div style="font-size:11px; color:var(--ios-secondary); line-height:1.4;">Zeile mit nur <code>===</code> = neue Seite</div>
         <button type="button" id="btn-pagebreak-edit" style="border:none; background:var(--ios-fill); color:var(--ios-blue); font-size:12px; font-weight:600; padding:6px 10px; border-radius:20px; cursor:pointer; white-space:nowrap;">➕ Seitenumbruch</button>
       </div>
       <textarea class="textinput" id="edit-text-textarea" style="flex:1; width:100%;"></textarea>
@@ -1349,7 +1349,7 @@
     const after = textarea.value.slice(end);
     const needsLeadingBreak = before.length > 0 && !before.endsWith("\n");
     const needsTrailingBreak = after.length > 0 && !after.startsWith("\n");
-    const insert = (needsLeadingBreak ? "\n\n" : "\n") + "---" + (needsTrailingBreak ? "\n\n" : "\n");
+    const insert = (needsLeadingBreak ? "\n\n" : "\n") + "===" + (needsTrailingBreak ? "\n\n" : "\n");
     textarea.value = before + insert + after;
     const newPos = (before + insert).length;
     textarea.focus();
@@ -1429,7 +1429,7 @@
     const segments = [];
     let current = [];
     for(const line of lines){
-      if(/^\s*-{3,}\s*$/.test(line)){
+      if(/^\s*={3,}\s*$/.test(line)){
         segments.push(current.join("\n"));
         current = [];
       } else {
