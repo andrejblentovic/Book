@@ -367,9 +367,13 @@
       <input type="text" class="textinput" id="input-title" placeholder="Titel des Buches">
       <div class="field-label" style="display:flex; align-items:center; justify-content:space-between;">
         <span>Text</span>
-        <button type="button" id="btn-paste-text" style="border:none; background:var(--ios-fill); color:var(--ios-blue); font-size:12px; font-weight:600; padding:6px 12px; border-radius:20px; cursor:pointer;">📋 Einfügen</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" id="btn-pagebreak-text" style="border:none; background:var(--ios-fill); color:var(--ios-blue); font-size:12px; font-weight:600; padding:6px 10px; border-radius:20px; cursor:pointer;">➕ Seitenumbruch</button>
+          <button type="button" id="btn-paste-text" style="border:none; background:var(--ios-fill); color:var(--ios-blue); font-size:12px; font-weight:600; padding:6px 12px; border-radius:20px; cursor:pointer;">📋 Einfügen</button>
+        </div>
       </div>
       <textarea class="textinput" id="input-text" placeholder="Text hier einfügen oder eintippen…"></textarea>
+      <div style="font-size:11px; color:var(--ios-secondary); padding:6px 2px 0; line-height:1.4;">Tipp: Tippe "➕ Seitenumbruch" an der Stelle, an der eine neue Seite beginnen soll — oder schreib selbst eine Zeile mit nur <code>---</code>.</div>
       <div class="row-end">
         <button class="bigbtn" id="btn-save-text">Als Buch sichern</button>
       </div>
@@ -454,7 +458,11 @@
       <div class="nav-title">Text bearbeiten</div>
       <button class="navbtn bold" id="btn-edit-text-save">Sichern</button>
     </div>
-    <div class="panel active" style="padding:14px 16px 18px;">
+    <div class="panel active" style="padding:10px 16px 18px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:8px;">
+        <div style="font-size:11px; color:var(--ios-secondary); line-height:1.4;">Zeile mit nur <code>---</code> = neue Seite</div>
+        <button type="button" id="btn-pagebreak-edit" style="border:none; background:var(--ios-fill); color:var(--ios-blue); font-size:12px; font-weight:600; padding:6px 10px; border-radius:20px; cursor:pointer; white-space:nowrap;">➕ Seitenumbruch</button>
+      </div>
       <textarea class="textinput" id="edit-text-textarea" style="flex:1; width:100%;"></textarea>
     </div>
   </section>
@@ -1333,6 +1341,27 @@
   });
 
   /* ---------------- Direct text ---------------- */
+  /* ---------------- Manueller Seitenumbruch einfügen ---------------- */
+  function insertAtCursor(textarea, insertText){
+    const start = textarea.selectionStart != null ? textarea.selectionStart : textarea.value.length;
+    const end = textarea.selectionEnd != null ? textarea.selectionEnd : textarea.value.length;
+    const before = textarea.value.slice(0, start);
+    const after = textarea.value.slice(end);
+    const needsLeadingBreak = before.length > 0 && !before.endsWith("\n");
+    const needsTrailingBreak = after.length > 0 && !after.startsWith("\n");
+    const insert = (needsLeadingBreak ? "\n\n" : "\n") + "---" + (needsTrailingBreak ? "\n\n" : "\n");
+    textarea.value = before + insert + after;
+    const newPos = (before + insert).length;
+    textarea.focus();
+    textarea.setSelectionRange(newPos, newPos);
+  }
+  document.getElementById("btn-pagebreak-text").addEventListener("click", ()=>{
+    insertAtCursor(document.getElementById("input-text"), "");
+  });
+  document.getElementById("btn-pagebreak-edit").addEventListener("click", ()=>{
+    insertAtCursor(document.getElementById("edit-text-textarea"), "");
+  });
+
   document.getElementById("btn-paste-text").addEventListener("click", async ()=>{
     const ta = document.getElementById("input-text");
     try{
@@ -1395,7 +1424,25 @@
     return out;
   }
 
-  function paginate(text, width, height, fontSize, fontFamily, padding){
+  function splitManualPages(text){
+    const lines = text.split("\n");
+    const segments = [];
+    let current = [];
+    for(const line of lines){
+      if(/^\s*-{3,}\s*$/.test(line)){
+        segments.push(current.join("\n"));
+        current = [];
+      } else {
+        current.push(line);
+      }
+    }
+    segments.push(current.join("\n"));
+    const trimmed = segments.map(s=>s.trim());
+    const nonEmpty = trimmed.filter(s=>s.length>0);
+    return nonEmpty.length ? nonEmpty : [""];
+  }
+
+  function paginateSegment(text, width, height, fontSize, fontFamily, padding){
     measurer.style.width = width+"px";
     measurer.style.height = height+"px";
     measurer.style.fontSize = fontSize+"px";
@@ -1419,6 +1466,15 @@
       }
       pages.push(buildText(tokens, idx, best));
       idx += best;
+    }
+    return pages.length ? pages : [""];
+  }
+
+  function paginate(text, width, height, fontSize, fontFamily, padding){
+    const segments = splitManualPages(text);
+    let pages = [];
+    for(const seg of segments){
+      pages = pages.concat(paginateSegment(seg, width, height, fontSize, fontFamily, padding));
     }
     return pages.length ? pages : [""];
   }
