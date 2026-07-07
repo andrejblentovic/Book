@@ -153,6 +153,11 @@
   .lib-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
   .section-header{ font-size:12px; font-weight:600; color:var(--ios-secondary); text-transform:uppercase; letter-spacing:.09em; padding:16px 22px 10px; }
   .section-header-row{ display:flex; align-items:center; justify-content:space-between; padding-right:10px; }
+  .continue-card{ margin:6px 20px 4px; padding:16px 18px; border-radius:16px; display:flex; align-items:center; gap:14px; cursor:pointer; box-shadow:0 6px 16px -8px rgba(0,0,0,0.3); }
+  .continue-card .cc-icon{ font-size:28px; flex-shrink:0; }
+  .continue-card .cc-label{ font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; opacity:.8; }
+  .continue-card .cc-title{ font-family:var(--serif); font-size:17px; font-weight:700; margin-top:2px; }
+  .continue-card .cc-sub{ font-size:12px; opacity:.85; margin-top:3px; }
   .filter-row{ display:flex; gap:8px; overflow-x:auto; padding:4px 20px 2px; -webkit-overflow-scrolling:touch; }
   .filter-chip{ flex-shrink:0; border:none; background:var(--ios-fill); color:var(--ios-label); font-size:13px; font-weight:600; padding:7px 14px; border-radius:16px; opacity:.75; }
   .filter-chip.active{ background:var(--ios-tint); color:#fff; opacity:1; }
@@ -191,10 +196,10 @@
   .book-card .meta{ font-size:11px; opacity:.82; }
   .book-card .progress{ font-size:11px; font-weight:600; opacity:.95; display:flex; align-items:center; gap:6px; }
   .book-card .progress::before{ content:""; width:26px; height:3px; border-radius:2px; background:rgba(255,252,240,0.35); box-shadow:inset 0 0 0 100px transparent; }
-  .book-card .del{ position:absolute; top:6px; right:6px; width:24px; height:24px; border-radius:50%; border:none; background:rgba(0,0,0,0.38); color:#fff; font-size:12px; display:none; align-items:center; justify-content:center; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
-  .book-card .rename{ position:absolute; top:6px; left:6px; width:24px; height:24px; border-radius:50%; border:none; background:rgba(0,0,0,0.38); color:#fff; font-size:11px; display:none; align-items:center; justify-content:center; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
-  .book-card .cover-btn{ position:absolute; top:6px; left:34px; width:24px; height:24px; border-radius:50%; border:none; background:rgba(0,0,0,0.38); color:#fff; font-size:11px; display:none; align-items:center; justify-content:center; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
-  .book-card.editing .del, .book-card.editing .rename, .book-card.editing .cover-btn{ display:flex; }
+  .book-card .edit-toolbar{ position:absolute; top:0; left:0; right:0; display:none; align-items:center; justify-content:space-between; gap:6px; padding:7px; background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0)); border-radius:8px 10px 0 0; }
+  .book-card.editing .edit-toolbar{ display:flex; }
+  .book-card .edit-toolbar button{ width:32px; height:32px; flex-shrink:0; border-radius:50%; border:none; background:rgba(20,20,20,0.55); color:#fff; font-size:15px; display:flex; align-items:center; justify-content:center; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+  .book-card .edit-toolbar button.del{ background:rgba(179,54,43,0.75); font-size:14px; }
   .book-card.editing .progress-ring{ display:none; }
   .book-card.editing{ animation:wiggle .28s ease-in-out infinite alternate; }
   @keyframes wiggle{ from{ transform:rotate(-0.6deg);} to{ transform:rotate(0.6deg);} }
@@ -241,7 +246,7 @@
     background:repeating-linear-gradient(180deg, var(--page-bg-2) 0 2px, var(--line) 2px 3px);
   }
   .page-sheet{ position:absolute; inset:0; border-radius:var(--radius-page); background:var(--page-bg); overflow:hidden; }
-  .page-content{ position:absolute; inset:0; padding:32px 26px 42px; font-family:var(--font-body); color:var(--ink); line-height:1.68; white-space:pre-wrap; overflow:hidden; }
+  .page-content{ position:absolute; inset:0; padding:32px 26px 42px; font-family:var(--font-body); color:var(--ink); line-height:1.5; white-space:pre-wrap; overflow:hidden; }
   .page-num{ position:absolute; bottom:14px; left:0; right:0; text-align:center; font-family:var(--sf); font-size:11px; letter-spacing:.06em; color:var(--ink-soft); }
   .gutter-shade{ position:absolute; top:0; bottom:0; left:0; width:28px; background:linear-gradient(to right, var(--shadow), transparent); opacity:.32; pointer-events:none; border-radius:var(--radius-page) 0 0 var(--radius-page); }
   .flip-clone{ position:absolute; inset:0; border-radius:var(--radius-page); transform-origin:left center; will-change:transform; z-index:5; }
@@ -251,7 +256,7 @@
   .tapzone.left{ left:0; } .tapzone.right{ right:0; }
 
   .scrollpage{ flex:1; margin:12px 18px 4px; border-radius:var(--radius-page); background:var(--page-bg); box-shadow:0 22px 44px -14px var(--shadow); overflow-y:auto; -webkit-overflow-scrolling:touch; }
-  .scrollpage .sp-page{ padding:32px 26px; font-family:var(--font-body); color:var(--ink); line-height:1.68; white-space:pre-wrap; border-bottom:1px dashed var(--line); }
+  .scrollpage .sp-page{ padding:32px 26px; font-family:var(--font-body); color:var(--ink); line-height:1.5; white-space:pre-wrap; border-bottom:1px dashed var(--line); }
   .scrollpage .sp-page:last-child{ border-bottom:none; }
   .scrollpage .sp-num{ text-align:center; font-size:11px; letter-spacing:.06em; color:var(--ink-soft); margin-top:14px; font-family:var(--sf); }
 
@@ -278,6 +283,12 @@
   .sheet.show{ transform:translateY(0); }
   .sheet .handle{ width:36px; height:5px; border-radius:3px; background:var(--ios-tertiary); margin:6px auto 12px; }
   .sheet h3{ font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ios-secondary); margin:16px 2px 8px; }
+  .settings-group{ margin-top:4px; }
+  .settings-group summary{ font-size:15px; font-weight:600; color:var(--ios-label); cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:10px 2px; border-bottom:0.5px solid var(--ios-separator); }
+  .settings-group summary::-webkit-details-marker{ display:none; }
+  .settings-group summary::after{ content:"⌄"; font-size:14px; color:var(--ios-secondary); transition:transform .2s; }
+  .settings-group[open] summary::after{ transform:rotate(180deg); }
+  .settings-group summary::before{ content:""; }
   .segmented{ display:flex; background:var(--ios-fill); border-radius:9.5px; padding:2.5px; gap:2px; }
   .segmented button{ flex:1; border:none; background:transparent; padding:8px 4px; border-radius:7.5px; font-size:13px; font-weight:520; color:var(--ios-label); opacity:.58; cursor:pointer; }
   .segmented button.active{ background:var(--ios-elevated); opacity:1; box-shadow:0 3px 8px rgba(30,25,10,0.14), 0 1px 1px rgba(30,25,10,0.08); font-weight:600; }
@@ -306,8 +317,9 @@
       <div class="large-title-row">
         <button class="navbtn" id="btn-edit-shelf">Bearbeiten</button>
         <div style="display:flex; align-items:center;">
+          <button class="navbtn" id="btn-global-search" title="Alle Bücher durchsuchen">🔍</button>
           <button class="navbtn" id="btn-random-book" title="Zufälliges Buch">🎲</button>
-          <button class="navbtn" id="btn-backup" title="Sichern / Wiederherstellen">⇅</button>
+          <button class="navbtn" id="btn-backup" title="Sichern / Wiederherstellen" style="position:relative;">⇅<span id="trash-dot" style="display:none; position:absolute; top:4px; right:2px; width:8px; height:8px; border-radius:50%; background:var(--ios-red);"></span></button>
           <button class="navbtn bold" id="btn-new">Neu +</button>
         </div>
       </div>
@@ -315,6 +327,7 @@
       <div class="filter-row" id="filter-row"></div>
     </div>
     <div class="lib-scroll" id="lib-scroll">
+      <div id="continue-reading-wrap"></div>
       <div class="section-header-row">
         <div class="section-header" id="shelf-section-header">MEINE BÜCHER</div>
         <button class="navbtn" id="btn-sort" style="font-size:13px; padding:6px 8px;">Sortieren ⌄</button>
@@ -434,6 +447,22 @@
     </div>
 
     <div class="book-viewport" id="book-viewport">
+      <div id="recompute-overlay" style="display:none; position:absolute; inset:0; z-index:50; align-items:center; justify-content:center; background:rgba(0,0,0,0.15); border-radius:var(--radius-page);">
+        <div class="ios-spinner">
+          <div style="transform:rotate(0deg) translateY(-90%); animation-delay:-1.000s;"></div>
+          <div style="transform:rotate(30deg) translateY(-90%); animation-delay:-0.917s;"></div>
+          <div style="transform:rotate(60deg) translateY(-90%); animation-delay:-0.833s;"></div>
+          <div style="transform:rotate(90deg) translateY(-90%); animation-delay:-0.750s;"></div>
+          <div style="transform:rotate(120deg) translateY(-90%); animation-delay:-0.667s;"></div>
+          <div style="transform:rotate(150deg) translateY(-90%); animation-delay:-0.583s;"></div>
+          <div style="transform:rotate(180deg) translateY(-90%); animation-delay:-0.500s;"></div>
+          <div style="transform:rotate(210deg) translateY(-90%); animation-delay:-0.417s;"></div>
+          <div style="transform:rotate(240deg) translateY(-90%); animation-delay:-0.333s;"></div>
+          <div style="transform:rotate(270deg) translateY(-90%); animation-delay:-0.250s;"></div>
+          <div style="transform:rotate(300deg) translateY(-90%); animation-delay:-0.167s;"></div>
+          <div style="transform:rotate(330deg) translateY(-90%); animation-delay:-0.083s;"></div>
+        </div>
+      </div>
       <div class="book-shell"></div>
       <div class="page-sheet" id="page-sheet">
         <div class="page-content" id="page-content"></div>
@@ -467,6 +496,21 @@
     </div>
   </section>
 
+  <!-- GLOBAL SEARCH -->
+  <section id="view-global-search" class="view">
+    <div class="ios-navbar">
+      <div class="search-bar-wrap">
+        <div class="search-field">
+          <span class="icon">🔍</span>
+          <input type="text" id="global-search-input" placeholder="Alle Bücher durchsuchen" autocomplete="off" autocorrect="off" spellcheck="false">
+          <button class="clear-btn" id="global-search-clear">✕</button>
+        </div>
+      </div>
+      <button class="navbtn" id="btn-global-search-cancel">Fertig</button>
+    </div>
+    <div class="search-results" id="global-search-results"></div>
+  </section>
+
   <!-- SEARCH -->
   <section id="view-search" class="view">
     <div class="ios-navbar">
@@ -488,27 +532,61 @@
 <div class="sheet-backdrop" id="sheet-backdrop"></div>
 <div class="sheet" id="settings-sheet">
   <div class="handle"></div>
-  <h3>Titel</h3>
-  <input type="text" class="textinput" id="sheet-title-input" placeholder="Titel des Buches" style="width:100%;">
-  <button class="ghostbtn" id="btn-edit-text" style="width:100%; padding:12px; margin-top:10px;">✎ Buchtext bearbeiten</button>
-  <h3>Optik</h3>
-  <div class="segmented" id="seg-theme">
-    <button data-val="paper">📜 Papier</button>
-    <button data-val="sepia">🟤 Sepia</button>
-    <button data-val="modern">📱 Modern</button>
-  </div>
-  <h3>Lese-Modus</h3>
-  <div class="segmented" id="seg-mode">
-    <button data-val="flip">Umblättern</button>
-    <button data-val="scroll">Scrollen</button>
-  </div>
-  <h3>Schriftgröße</h3>
-  <div class="fontsize-row">
-    <span style="font-size:12px; color:var(--ios-secondary);">A</span>
-    <input type="range" min="14" max="24" step="1" id="fontsize-range">
-    <span style="font-size:21px; color:var(--ios-secondary);">A</span>
-  </div>
-  <button class="danger-row" id="btn-delete-book">Buch löschen</button>
+
+  <details class="settings-group" open>
+    <summary>Anzeige</summary>
+    <h3>Optik</h3>
+    <div class="segmented" id="seg-theme">
+      <button data-val="paper">📜 Papier</button>
+      <button data-val="sepia">🟤 Sepia</button>
+      <button data-val="modern">📱 Modern</button>
+    </div>
+    <h3>Lese-Modus</h3>
+    <div class="segmented" id="seg-mode">
+      <button data-val="flip">Umblättern</button>
+      <button data-val="scroll">Scrollen</button>
+    </div>
+    <h3>Schriftgröße</h3>
+    <div class="fontsize-row">
+      <span style="font-size:12px; color:var(--ios-secondary);">A</span>
+      <input type="range" min="14" max="32" step="1" id="fontsize-range">
+      <span style="font-size:21px; color:var(--ios-secondary);">A</span>
+    </div>
+    <h3>Schriftart</h3>
+    <div class="segmented" id="seg-font">
+      <button data-val="">Standard</button>
+      <button data-val="serif">Serife</button>
+      <button data-val="sans">Sans</button>
+      <button data-val="mono">Mono</button>
+    </div>
+    <h3>Zeilenabstand</h3>
+    <div class="fontsize-row">
+      <span style="font-size:11px; color:var(--ios-secondary);">Eng</span>
+      <input type="range" min="1.2" max="2.0" step="0.05" id="lineheight-range">
+      <span style="font-size:11px; color:var(--ios-secondary);">Weit</span>
+    </div>
+    <h3>Seitenrand</h3>
+    <div class="fontsize-row">
+      <span style="font-size:11px; color:var(--ios-secondary);">Schmal</span>
+      <input type="range" min="14" max="44" step="2" id="margin-range">
+      <span style="font-size:11px; color:var(--ios-secondary);">Breit</span>
+    </div>
+    <h3>Seite springen</h3>
+    <div class="fontsize-row" style="gap:8px;">
+      <input type="number" min="1" id="goto-page-input" placeholder="Seitenzahl" style="flex:1; border:none; border-radius:10px; padding:9px 12px; font-size:15px; background:var(--ios-card); color:var(--ios-label);">
+      <button class="navbtn bold" id="btn-goto-page" style="padding:8px 10px;">Los</button>
+    </div>
+  </details>
+
+  <details class="settings-group">
+    <summary>Buch verwalten</summary>
+    <h3>Titel</h3>
+    <input type="text" class="textinput" id="sheet-title-input" placeholder="Titel des Buches" style="width:100%;">
+    <button class="ghostbtn" id="btn-edit-text" style="width:100%; padding:12px; margin-top:10px;">✎ Buchtext bearbeiten</button>
+    <button class="ghostbtn" id="btn-export-book" style="width:100%; padding:12px; margin-top:8px;">⬇️ Als Datei exportieren (PDF-fähig)</button>
+    <button class="ghostbtn" id="btn-undo-text" style="width:100%; padding:12px; margin-top:8px; display:none;">↩️ Letzte Textänderung rückgängig</button>
+    <button class="danger-row" id="btn-delete-book">Buch löschen</button>
+  </details>
 </div>
 
 <!-- GENERIC MINI MODAL (rename / confirm) -->
@@ -534,8 +612,26 @@
   <div class="handle"></div>
   <h3>Bibliothek sichern</h3>
   <button class="bigbtn" id="btn-export" style="margin-bottom:10px;">⬇️ Als Datei exportieren</button>
-  <button class="ghostbtn" id="btn-import" style="width:100%; padding:14px;">⬆️ Aus Datei wiederherstellen</button>
+  <button class="ghostbtn" id="btn-import" style="width:100%; padding:14px; margin-bottom:10px;">⬆️ Aus Datei wiederherstellen</button>
+  <button class="ghostbtn" id="btn-open-trash" style="width:100%; padding:14px;">🗑️ Papierkorb</button>
+  <button class="ghostbtn" id="btn-open-stats" style="width:100%; padding:14px; margin-top:10px;">📊 Lesestatistik</button>
   <p style="font-size:12px; color:var(--ios-secondary); margin:14px 2px 4px; line-height:1.4;">Deine Bücher sind nur auf diesem Gerät gespeichert. Exportiere regelmäßig eine Sicherung, besonders vor einem Gerätewechsel.</p>
+</div>
+
+<!-- STATS -->
+<div class="sheet-backdrop" id="stats-backdrop"></div>
+<div class="sheet" id="stats-sheet">
+  <div class="handle"></div>
+  <h3>Lesestatistik</h3>
+  <div id="stats-content" style="padding:6px 2px 10px; font-size:16px; line-height:1.7; color:var(--ios-label);"></div>
+</div>
+
+<!-- TRASH -->
+<div class="sheet-backdrop" id="trash-backdrop"></div>
+<div class="sheet" id="trash-sheet">
+  <div class="handle"></div>
+  <h3>Papierkorb (7 Tage)</h3>
+  <div id="trash-list" style="max-height:50vh; overflow-y:auto;"></div>
 </div>
 <input type="file" accept="application/json" id="file-import" style="display:none">
 <input type="file" accept="image/*" id="file-cover" style="display:none">
@@ -752,16 +848,67 @@
   /* ---------------- Storage ---------------- */
   const LS_BOOKS = "lesestube_books_v1";
   const LS_SETTINGS = "lesestube_settings_v1";
+  const LS_TRASH = "lesestube_trash_v1";
+  const TRASH_RETENTION_DAYS = 7;
+
+  function loadTrash(){
+    try{ return JSON.parse(localStorage.getItem(LS_TRASH)) || []; }catch(e){ return []; }
+  }
+  function saveTrash(trash){
+    try{ localStorage.setItem(LS_TRASH, JSON.stringify(trash)); return true; }
+    catch(e){ return false; }
+  }
+  function purgeOldTrash(){
+    let trash = loadTrash();
+    const cutoff = Date.now() - TRASH_RETENTION_DAYS*24*60*60*1000;
+    const kept = trash.filter(t=> new Date(t.deletedAt).getTime() > cutoff);
+    if(kept.length !== trash.length) saveTrash(kept);
+  }
+  function moveBookToTrash(bookId){
+    const book = books.find(b=>b.id===bookId);
+    if(!book) return;
+    books = books.filter(b=>b.id!==bookId);
+    saveBooks(books);
+    const trash = loadTrash();
+    trash.push(Object.assign({}, book, {deletedAt: new Date().toISOString()}));
+    saveTrash(trash);
+  }
+  function restoreBookFromTrash(bookId){
+    const trash = loadTrash();
+    const idx = trash.findIndex(b=>b.id===bookId);
+    if(idx === -1) return;
+    const book = trash[idx];
+    delete book.deletedAt;
+    trash.splice(idx,1);
+    saveTrash(trash);
+    books.push(book);
+    saveBooks(books);
+    renderShelf();
+  }
+  function permanentlyDeleteFromTrash(bookId){
+    const trash = loadTrash().filter(b=>b.id!==bookId);
+    saveTrash(trash);
+  }
 
   function loadBooks(){
     try{ return JSON.parse(localStorage.getItem(LS_BOOKS)) || []; }catch(e){ return []; }
   }
-  function saveBooks(books){ localStorage.setItem(LS_BOOKS, JSON.stringify(books)); }
+  function saveBooks(books){
+    try{
+      localStorage.setItem(LS_BOOKS, JSON.stringify(books));
+      return true;
+    }catch(e){
+      dlog("❌ saveBooks() FEHLGESCHLAGEN: " + ((e&&e.name)||"") + " " + ((e&&e.message)||e));
+      showAlertModal("⚠️ Speichern fehlgeschlagen: Der Speicherplatz für diese App ist voll (oder ein anderer Fehler ist aufgetreten).\n\nDeine letzte Änderung wurde NICHT dauerhaft gespeichert. Bitte lösche ein paar Bücher oder entferne Cover-Fotos, um Platz zu schaffen, und versuche es erneut.");
+      return false;
+    }
+  }
 
   function loadSettings(){
+    const defaults = {theme:"paper", mode:"flip", fontSize:18, fontFamily:"", lineHeight:1.5, margin:26};
     try{
-      return Object.assign({theme:"paper", mode:"flip", fontSize:18}, JSON.parse(localStorage.getItem(LS_SETTINGS)) || {});
-    }catch(e){ return {theme:"paper", mode:"flip", fontSize:18}; }
+      return Object.assign({}, defaults, JSON.parse(localStorage.getItem(LS_SETTINGS)) || {});
+    }catch(e){ return defaults; }
   }
   function saveSettings(s){ localStorage.setItem(LS_SETTINGS, JSON.stringify(s)); }
 
@@ -820,9 +967,40 @@
     return arr;
   }
 
+  function renderContinueCard(){
+    const wrap = document.getElementById("continue-reading-wrap");
+    const candidates = books.filter(b=>b.lastOpenedAt);
+    if(candidates.length === 0){ wrap.innerHTML = ""; return; }
+    const book = candidates.reduce((a,b)=> new Date(a.lastOpenedAt) > new Date(b.lastOpenedAt) ? a : b);
+    const palette = COVER_PALETTES[book.theme] || COVER_PALETTES.paper;
+    const color = palette[Math.abs(hashCode(book.id)) % palette.length];
+    const totalPages = (book.pagesFlip && book.pagesFlip.length) || 1;
+    const pct = Math.max(0, Math.min(100, Math.round(((book.currentPage||0)+1) / totalPages * 100)));
+    const card = document.createElement("div");
+    card.className = "continue-card";
+    card.style.background = `linear-gradient(135deg, ${color}, ${shade(color,-18)})`;
+    card.style.color = "#F5EFE0";
+    card.innerHTML = `
+      <div class="cc-icon">${book.coverImage ? "📷" : "📖"}</div>
+      <div style="flex:1; min-width:0;">
+        <div class="cc-label">Weiterlesen</div>
+        <div class="cc-title" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(book.title)}</div>
+        <div class="cc-sub">Seite ${(book.currentPage||0)+1} von ${totalPages} · ${pct}%</div>
+      </div>
+    `;
+    card.addEventListener("click", ()=>openReader(book.id));
+    wrap.innerHTML = "";
+    wrap.appendChild(card);
+  }
+
   function renderShelf(){
     shelf.innerHTML = "";
     renderFilterChips();
+    renderContinueCard();
+    try{
+      purgeOldTrash();
+      document.getElementById("trash-dot").style.display = loadTrash().length > 0 ? "block" : "none";
+    }catch(e){}
     const sectionHeader = document.getElementById("shelf-section-header");
     if(books.length === 0){
       shelf.style.display = "none";
@@ -870,15 +1048,16 @@
             <div class="meta">${formatDate(book.createdAt)}</div>
           </div>
         </div>
-        <button class="del">✕</button>
-        <button class="rename">✎</button>
-        <button class="cover-btn">🖼️</button>
+        <div class="edit-toolbar">
+          <button class="rename" title="Umbenennen">✎</button>
+          <button class="cover-btn" title="Cover ändern">🖼️</button>
+          <button class="del" title="Löschen">✕</button>
+        </div>
       `;
       card.querySelector(".del").addEventListener("click",(e)=>{
         e.stopPropagation();
-        showConfirmModal(`"${book.title}" wirklich löschen?`, "Löschen", ()=>{
-          books = books.filter(b=>b.id!==book.id);
-          saveBooks(books);
+        showConfirmModal(`"${book.title}" in den Papierkorb verschieben?`, "Löschen", ()=>{
+          moveBookToTrash(book.id);
           renderShelf();
         });
       });
@@ -946,6 +1125,67 @@
     openReader(pick.id);
   });
 
+  /* ---------------- Global (cross-book) search ---------------- */
+  let pendingGlobalJump = null;
+  document.getElementById("btn-global-search").addEventListener("click", ()=>{
+    const input = document.getElementById("global-search-input");
+    input.value = "";
+    document.getElementById("global-search-clear").style.display = "none";
+    document.getElementById("global-search-results").innerHTML = `<div class="search-empty">Durchsucht alle Bücher deiner Bibliothek.</div>`;
+    showView("view-global-search");
+    setTimeout(()=>input.focus(), 60);
+  });
+  document.getElementById("btn-global-search-cancel").addEventListener("click", ()=>{
+    showView("view-library");
+  });
+  document.getElementById("global-search-clear").addEventListener("click", ()=>{
+    const input = document.getElementById("global-search-input");
+    input.value = "";
+    document.getElementById("global-search-clear").style.display = "none";
+    document.getElementById("global-search-results").innerHTML = `<div class="search-empty">Durchsucht alle Bücher deiner Bibliothek.</div>`;
+    input.focus();
+  });
+  document.getElementById("global-search-input").addEventListener("input", e=>{
+    const q = e.target.value.trim();
+    document.getElementById("global-search-clear").style.display = q ? "flex" : "none";
+    runGlobalSearch(q);
+  });
+  function runGlobalSearch(query){
+    const resultsEl = document.getElementById("global-search-results");
+    if(!query || query.length < 2){
+      resultsEl.innerHTML = `<div class="search-empty">Durchsucht alle Bücher deiner Bibliothek.</div>`;
+      return;
+    }
+    let re;
+    try{ re = new RegExp(escapeRegex(query), "i"); }catch(e){ return; }
+    let html = "";
+    let count = 0;
+    books.forEach(book=>{
+      const m = re.exec(book.rawText || "");
+      if(m && count < 100){
+        const start = Math.max(0, m.index-32);
+        const end = Math.min(book.rawText.length, m.index+m[0].length+32);
+        const before = book.rawText.slice(start, m.index);
+        const match = book.rawText.slice(m.index, m.index+m[0].length);
+        const after = book.rawText.slice(m.index+m[0].length, end);
+        const snippet = (start>0?"…":"") + escapeHtml(before).replace(/\n+/g," ") + "<mark>" + escapeHtml(match) + "</mark>" + escapeHtml(after).replace(/\n+/g," ") + (end<book.rawText.length?"…":"");
+        html += `<button class="search-result-row" data-book="${book.id}"><span class="srr-page">${escapeHtml(book.title)}</span><span class="srr-snippet">${snippet}</span></button>`;
+        count++;
+      }
+    });
+    if(count === 0){
+      resultsEl.innerHTML = `<div class="search-empty">Keine Treffer für „${escapeHtml(query)}“.</div>`;
+    } else {
+      resultsEl.innerHTML = html;
+      resultsEl.querySelectorAll(".search-result-row").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          pendingGlobalJump = query;
+          openReader(btn.dataset.book);
+        });
+      });
+    }
+  }
+
   /* ---------------- Sort sheet ---------------- */
   const sortBackdrop = document.getElementById("sort-backdrop");
   const sortSheet = document.getElementById("sort-sheet");
@@ -965,10 +1205,111 @@
   /* ---------------- Backup / Export / Import ---------------- */
   const backupBackdrop = document.getElementById("backup-backdrop");
   const backupSheet = document.getElementById("backup-sheet");
+  function loadStats(){
+    try{ return Object.assign({dates:[], totalPages:0}, JSON.parse(localStorage.getItem("lesestube_stats_v1")) || {}); }
+    catch(e){ return {dates:[], totalPages:0}; }
+  }
+  function saveStats(s){ try{ localStorage.setItem("lesestube_stats_v1", JSON.stringify(s)); }catch(e){} }
+  function localDateKey(d){
+    d = d || new Date();
+    const y = d.getFullYear();
+    const mo = String(d.getMonth()+1).padStart(2,"0");
+    const da = String(d.getDate()).padStart(2,"0");
+    return y+"-"+mo+"-"+da;
+  }
+  function recordReadingActivity(){
+    const stats = loadStats();
+    const today = localDateKey();
+    if(!stats.dates.includes(today)) stats.dates.push(today);
+    stats.totalPages = (stats.totalPages||0) + 1;
+    saveStats(stats);
+  }
+  function computeStreak(dates){
+    const set = new Set(dates);
+    let streak = 0;
+    let d = new Date();
+    if(!set.has(localDateKey(d))){
+      // heute noch nicht gelesen — Serie zählt trotzdem, wenn gestern gelesen wurde
+      d.setDate(d.getDate()-1);
+      if(!set.has(localDateKey(d))) return 0;
+    }
+    while(set.has(localDateKey(d))){
+      streak++;
+      d.setDate(d.getDate()-1);
+    }
+    return streak;
+  }
+
   document.getElementById("btn-backup").addEventListener("click", ()=>{
+    purgeOldTrash();
+    const count = loadTrash().length;
+    document.getElementById("btn-open-trash").textContent = count > 0 ? `🗑️ Papierkorb (${count})` : "🗑️ Papierkorb";
     backupBackdrop.classList.add("show"); backupSheet.classList.add("show");
   });
   backupBackdrop.addEventListener("click", ()=>{ backupBackdrop.classList.remove("show"); backupSheet.classList.remove("show"); });
+
+  const trashBackdrop = document.getElementById("trash-backdrop");
+  const trashSheet = document.getElementById("trash-sheet");
+  function renderTrash(){
+    purgeOldTrash();
+    const trash = loadTrash();
+    const list = document.getElementById("trash-list");
+    if(trash.length === 0){
+      list.innerHTML = `<div class="search-empty" style="padding:30px 10px 10px;">Papierkorb ist leer.</div>`;
+      return;
+    }
+    list.innerHTML = trash.slice().reverse().map(b=>{
+      const days = Math.max(0, TRASH_RETENTION_DAYS - Math.floor((Date.now()-new Date(b.deletedAt).getTime())/(24*60*60*1000)));
+      return `<div class="search-result-row" style="display:flex; align-items:center; justify-content:space-between; cursor:default;">
+        <div>
+          <div class="srr-snippet" style="font-weight:600;">${escapeHtml(b.title)}</div>
+          <div class="srr-page">noch ${days} Tag(e), dann endgültig gelöscht</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="ghostbtn" data-restore="${b.id}" style="padding:8px 12px; font-size:13px;">Wiederherstellen</button>
+          <button class="navbtn destructive" data-purge="${b.id}" style="padding:8px 4px; font-size:13px;">Löschen</button>
+        </div>
+      </div>`;
+    }).join("");
+    list.querySelectorAll("[data-restore]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        restoreBookFromTrash(btn.dataset.restore);
+        renderTrash();
+      });
+    });
+    list.querySelectorAll("[data-purge]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        showConfirmModal("Endgültig löschen? Das kann nicht rückgängig gemacht werden.", "Endgültig löschen", ()=>{
+          permanentlyDeleteFromTrash(btn.dataset.purge);
+          renderTrash();
+        });
+      });
+    });
+  }
+  document.getElementById("btn-open-trash").addEventListener("click", ()=>{
+    backupBackdrop.classList.remove("show"); backupSheet.classList.remove("show");
+    renderTrash();
+    trashBackdrop.classList.add("show"); trashSheet.classList.add("show");
+  });
+  trashBackdrop.addEventListener("click", ()=>{ trashBackdrop.classList.remove("show"); trashSheet.classList.remove("show"); });
+
+  const statsBackdrop = document.getElementById("stats-backdrop");
+  const statsSheet = document.getElementById("stats-sheet");
+  document.getElementById("btn-open-stats").addEventListener("click", ()=>{
+    backupBackdrop.classList.remove("show"); backupSheet.classList.remove("show");
+    const stats = loadStats();
+    const streak = computeStreak(stats.dates||[]);
+    const totalBooks = books.length;
+    document.getElementById("stats-content").innerHTML = `
+      <div>📚 Bücher in der Bibliothek: <strong>${totalBooks}</strong></div>
+      <div>📄 Seiten insgesamt gelesen: <strong>${stats.totalPages||0}</strong></div>
+      <div>🔥 Lese-Serie: <strong>${streak} Tag${streak===1?"":"e"}</strong> in Folge</div>
+      <div>📅 Lesetage insgesamt: <strong>${(stats.dates||[]).length}</strong></div>
+    `;
+    statsBackdrop.classList.add("show"); statsSheet.classList.add("show");
+  });
+  statsBackdrop.addEventListener("click", ()=>{ statsBackdrop.classList.remove("show"); statsSheet.classList.remove("show"); });
+
   document.getElementById("btn-export").addEventListener("click", ()=>{
     const payload = { exportedAt: new Date().toISOString(), books, settings };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
@@ -1356,10 +1697,14 @@
     textarea.setSelectionRange(newPos, newPos);
   }
   document.getElementById("btn-pagebreak-text").addEventListener("click", ()=>{
-    insertAtCursor(document.getElementById("input-text"), "");
+    showConfirmModal("An dieser Stelle einen Seitenumbruch einfügen?", "Einfügen", ()=>{
+      insertAtCursor(document.getElementById("input-text"), "");
+    });
   });
   document.getElementById("btn-pagebreak-edit").addEventListener("click", ()=>{
-    insertAtCursor(document.getElementById("edit-text-textarea"), "");
+    showConfirmModal("An dieser Stelle einen Seitenumbruch einfügen?", "Einfügen", ()=>{
+      insertAtCursor(document.getElementById("edit-text-textarea"), "");
+    });
   });
 
   document.getElementById("btn-paste-text").addEventListener("click", async ()=>{
@@ -1383,6 +1728,17 @@
   });
 
   function createBook(title, text){
+    const normalized = title.trim().toLowerCase();
+    const similar = books.find(b=>b.title.trim().toLowerCase()===normalized);
+    if(similar){
+      showConfirmModal(`Es gibt bereits ein Buch namens "${similar.title}". Trotzdem als neues, separates Buch anlegen?`, "Trotzdem anlegen", ()=>{
+        actuallyCreateBook(title, text);
+      });
+    } else {
+      actuallyCreateBook(title, text);
+    }
+  }
+  function actuallyCreateBook(title, text){
     const book = {
       id: "b_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),
       title, rawText: text,
@@ -1446,7 +1802,7 @@
     measurer.style.width = width+"px";
     measurer.style.height = height+"px";
     measurer.style.fontSize = fontSize+"px";
-    measurer.style.lineHeight = "1.65";
+    measurer.style.lineHeight = String(settings.lineHeight);
     measurer.style.fontFamily = fontFamily;
     measurer.style.padding = padding;
 
@@ -1480,6 +1836,9 @@
   }
 
   function fontFamilyFor(theme){
+    if(settings.fontFamily === "sans") return "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif";
+    if(settings.fontFamily === "serif") return "'New York','Iowan Old Style','Palatino',Georgia,serif";
+    if(settings.fontFamily === "mono") return "'SF Mono','Menlo',monospace";
     return (theme === "paper" || theme === "sepia") ? "'New York','Iowan Old Style','Palatino',Georgia,serif" : "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif";
   }
 
@@ -1490,6 +1849,8 @@
     stopTTS();
     currentBook = books.find(b=>b.id===bookId);
     if(!currentBook) return;
+    currentBook.lastOpenedAt = new Date().toISOString();
+    saveBooks(books);
     settings.theme = currentBook.theme || settings.theme;
     settings.mode = currentBook.mode || settings.mode;
     settings.fontSize = currentBook.fontSize || settings.fontSize;
@@ -1514,33 +1875,68 @@
   });
 
   function persistBookProgress(){
-    if(!currentBook) return;
+    if(!currentBook) return false;
     currentBook.theme = settings.theme;
     currentBook.mode = settings.mode;
     currentBook.fontSize = settings.fontSize;
     const idx = books.findIndex(b=>b.id===currentBook.id);
     if(idx>-1) books[idx] = currentBook;
-    saveBooks(books);
+    const ok = saveBooks(books);
     saveSettings(settings);
+    return ok;
+  }
+
+  function rebuildPaginationWithIndicator(){
+    if(!currentBook) return;
+    const isLong = (currentBook.rawText||"").length > 20000;
+    if(!isLong){ rebuildPagination(); return; }
+    const overlay = document.getElementById("recompute-overlay");
+    overlay.style.display = "flex";
+    setTimeout(()=>{
+      rebuildPagination();
+      overlay.style.display = "none";
+    }, 20);
   }
 
   function rebuildPagination(){
     if(!currentBook) return;
     const viewport = document.getElementById("book-viewport");
     const rect = viewport.getBoundingClientRect();
-    const pad = 30;
+    const m = settings.margin;
+    const padTop = 32, padBottom = 42; // muss exakt zur echten Anzeige (renderFlipPage) passen
+    const segs = splitManualPages(currentBook.rawText);
+    dlog("rebuildPagination — Version 18 (Doppel-Abzug-Fix: box-sizing:border-box zieht Innenabstand schon automatisch ab). Manuelle Segmente gefunden: " + segs.length);
+    dlog("Maße: viewport " + Math.round(rect.width) + "x" + Math.round(rect.height) + ", Rand=" + m + ", Zeilenabstand=" + settings.lineHeight);
+    if(segs.length > 1){
+      segs.forEach((s,i)=>dlog("Segment " + (i+1) + ": " + s.length + " Zeichen, beginnt mit: " + JSON.stringify(s.slice(0,40))));
+    }
+    // Wichtig: da box-sizing:border-box gilt, wird das Padding (unten übergeben)
+    // bereits automatisch von width/height abgezogen. Hier NICHT nochmal abziehen —
+    // sonst wird der Innenabstand doppelt gerechnet und die Seite unnötig verkleinert.
     const pages = paginate(
       currentBook.rawText,
-      Math.max(rect.width - 2*26, 100),
-      Math.max(rect.height - 2*pad, 100),
+      Math.max(rect.width, 100),
+      Math.max(rect.height, 100),
       settings.fontSize,
       fontFamilyFor(settings.theme),
-      "30px 26px 40px"
+      padTop + "px " + m + "px " + padBottom + "px"
     );
+    dlog("Ergebnis: " + pages.length + " Seiten. Zeichen pro Seite (erste 6): " + pages.slice(0,6).map(p=>p.length).join(", "));
+    if(pages[2]) dlog("Seite 3 Inhalt (Ende): " + JSON.stringify(pages[2].slice(-60)));
     currentBook.pagesFlip = pages;
     if(currentBook.currentPage >= pages.length) currentBook.currentPage = pages.length - 1;
     if(currentBook.currentPage < 0) currentBook.currentPage = 0;
     applyMode();
+    if(pendingGlobalJump){
+      const q = pendingGlobalJump;
+      pendingGlobalJump = null;
+      let re;
+      try{ re = new RegExp(escapeRegex(q), "i"); }catch(e){ re = null; }
+      if(re){
+        const idx = pages.findIndex(p=>re.test(p));
+        if(idx > -1) jumpToPageFromSearch(idx, q);
+      }
+    }
   }
 
   function applyMode(){
@@ -1559,8 +1955,19 @@
   }
 
   function updateIndicator(){
-    const total = (currentBook.pagesFlip||[""]).length;
-    document.getElementById("page-indicator").textContent = `Seite ${(currentBook.currentPage||0)+1} von ${total}`;
+    const pages = currentBook.pagesFlip || [""];
+    const total = pages.length;
+    const current = currentBook.currentPage||0;
+    let timeLabel = "";
+    try{
+      const remainingChars = pages.slice(current+1).reduce((sum,p)=>sum+p.length, 0);
+      const remainingWords = Math.round(remainingChars/5.5); // grobe Schätzung: ~5.5 Zeichen/Wort inkl. Leerzeichen
+      const minutes = Math.max(0, Math.round(remainingWords/200)); // ~200 Wörter/Minute Lesegeschwindigkeit
+      if(current < total-1){
+        timeLabel = minutes < 1 ? " · <1 Min." : ` · noch ~${minutes} Min.`;
+      }
+    }catch(e){}
+    document.getElementById("page-indicator").textContent = `Seite ${current+1} von ${total}${timeLabel}`;
   }
 
   /* ---- Flip mode rendering ---- */
@@ -1571,6 +1978,8 @@
     const contentEl = document.getElementById("page-content");
     contentEl.style.fontSize = settings.fontSize+"px";
     contentEl.style.fontFamily = fontFamilyFor(settings.theme);
+    contentEl.style.lineHeight = settings.lineHeight;
+    contentEl.style.padding = "32px " + settings.margin + "px 42px";
     contentEl.textContent = pages[i];
     document.getElementById("page-num-flip").textContent = (i+1)+" / "+pages.length + (currentBook.notes && currentBook.notes[i] ? "  📝" : "");
     document.getElementById("tap-left").style.visibility = i>0 ? "visible" : "hidden";
@@ -1581,16 +1990,17 @@
   function flipTo(newIndex, direction){
     const pages = currentBook.pagesFlip || [""];
     if(newIndex < 0 || newIndex > pages.length-1) return;
+    recordReadingActivity();
     stopTTS();
     if(navigator.vibrate){ try{ navigator.vibrate(8); }catch(e){} }
     const viewport = document.getElementById("book-viewport");
 
     const clone = document.createElement("div");
     clone.className = "flip-clone";
-    const rectStyle = "font-family:"+fontFamilyFor(settings.theme)+"; font-size:"+settings.fontSize+"px;";
+    const rectStyle = "font-family:"+fontFamilyFor(settings.theme)+"; font-size:"+settings.fontSize+"px; line-height:"+settings.lineHeight+"; padding:32px "+settings.margin+"px 42px;";
     if(direction === "next"){
       clone.innerHTML = `
-        <div class="face front" style="background:var(--page-bg); padding:30px 26px 40px; ${rectStyle} color:var(--ink); line-height:1.65; white-space:pre-wrap; overflow:hidden;">${escapeHtml(pages[currentBook.currentPage])}</div>
+        <div class="face front" style="background:var(--page-bg); ${rectStyle} color:var(--ink); white-space:pre-wrap; overflow:hidden;">${escapeHtml(pages[currentBook.currentPage])}</div>
         <div class="face back"></div>`;
       viewport.appendChild(clone);
       renderFlipPage(newIndex);
@@ -1601,7 +2011,7 @@
     } else {
       renderFlipPage(newIndex);
       clone.innerHTML = `
-        <div class="face front" style="background:var(--page-bg); padding:30px 26px 40px; ${rectStyle} color:var(--ink); line-height:1.65; white-space:pre-wrap; overflow:hidden;">${escapeHtml(pages[newIndex])}</div>
+        <div class="face front" style="background:var(--page-bg); ${rectStyle} color:var(--ink); white-space:pre-wrap; overflow:hidden;">${escapeHtml(pages[newIndex])}</div>
         <div class="face back"></div>`;
       clone.style.transform = "rotateY(-165deg)";
       viewport.appendChild(clone);
@@ -1647,7 +2057,7 @@
     const el = document.getElementById("scrollpage");
     const pages = currentBook.pagesFlip || [""];
     el.innerHTML = pages.map((p,i)=>`
-      <div class="sp-page" style="font-size:${settings.fontSize}px; font-family:${fontFamilyFor(settings.theme)};">${escapeHtml(p)}<div class="sp-num">${i+1} / ${pages.length}</div></div>
+      <div class="sp-page" style="font-size:${settings.fontSize}px; font-family:${fontFamilyFor(settings.theme)}; line-height:${settings.lineHeight}; padding:32px ${settings.margin}px 42px;">${escapeHtml(p)}<div class="sp-num">${i+1} / ${pages.length}</div></div>
     `).join("");
     el.scrollTop = 0;
     let ticking = false;
@@ -1680,10 +2090,55 @@
     document.getElementById("sheet-title-input").value = currentBook ? currentBook.title : "";
     document.getElementById("seg-theme").querySelectorAll("button").forEach(b=>b.classList.toggle("active", b.dataset.val===settings.theme));
     document.getElementById("seg-mode").querySelectorAll("button").forEach(b=>b.classList.toggle("active", b.dataset.val===settings.mode));
+    document.getElementById("seg-font").querySelectorAll("button").forEach(b=>b.classList.toggle("active", b.dataset.val===(settings.fontFamily||"")));
     document.getElementById("fontsize-range").value = settings.fontSize;
+    document.getElementById("lineheight-range").value = settings.lineHeight;
+    document.getElementById("margin-range").value = settings.margin;
+    document.getElementById("btn-undo-text").style.display = (currentBook && currentBook.previousRawText) ? "block" : "none";
     sheet.classList.add("show"); backdrop.classList.add("show");
   }
   function closeSheet(){ sheet.classList.remove("show"); backdrop.classList.remove("show"); }
+  document.getElementById("btn-export-book").addEventListener("click", ()=>{
+    if(!currentBook) return;
+    const pages = currentBook.pagesFlip || [currentBook.rawText];
+    const bodyHtml = pages.map((p,i)=>`<div class="pg">${escapeHtml(p).replace(/\n/g,"<br>")}<div class="pn">${i+1}</div></div>`).join("\n");
+    const doc = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<title>${escapeHtml(currentBook.title)}</title>
+<style>
+  body{ font-family: Georgia, 'Iowan Old Style', serif; max-width:640px; margin:40px auto; padding:0 24px; color:#222; line-height:1.6; }
+  h1{ text-align:center; font-size:28px; margin-bottom:50px; }
+  .pg{ white-space:pre-wrap; margin-bottom:36px; page-break-after:always; position:relative; }
+  .pn{ text-align:center; font-size:12px; color:#888; margin-top:16px; }
+  @media print{ .pg{ page-break-after:always; } }
+</style></head>
+<body>
+  <h1>${escapeHtml(currentBook.title)}</h1>
+  ${bodyHtml}
+</body></html>`;
+    const blob = new Blob([doc], {type:"text/html"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = (currentBook.title.replace(/[^a-zA-Z0-9äöüÄÖÜß _-]/g,"") || "buch") + ".html";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    showAlertModal("Datei heruntergeladen. Tipp: Öffne sie in Safari und nutze Teilen → Drucken → \"In Dateien sichern\" bzw. \"PDF erstellen\", um daraus ein PDF zu machen.");
+  });
+  document.getElementById("btn-undo-text").addEventListener("click", ()=>{
+    if(!currentBook || !currentBook.previousRawText) return;
+    showConfirmModal("Die letzte Textänderung rückgängig machen?", "Rückgängig", ()=>{
+      const restored = currentBook.previousRawText;
+      currentBook.previousRawText = null;
+      currentBook.rawText = restored;
+      currentBook.pagesFlip = null;
+      currentBook.currentPage = 0;
+      persistBookProgress();
+      closeSheet();
+      requestAnimationFrame(()=>{ requestAnimationFrame(rebuildPagination); });
+    });
+  });
   document.getElementById("btn-settings").addEventListener("click", openSheet);
   backdrop.addEventListener("click", closeSheet);
 
@@ -1711,10 +2166,16 @@
     if(!currentBook) return;
     const newText = document.getElementById("edit-text-textarea").value.trim();
     if(!newText){ showAlertModal("Der Text darf nicht leer sein."); return; }
+    currentBook.previousRawText = currentBook.rawText;
     currentBook.rawText = newText;
     currentBook.pagesFlip = null;
     currentBook.currentPage = 0;
-    persistBookProgress();
+    try{
+      const usedKB = Math.round(new Blob([JSON.stringify(books)]).size/1024);
+      dlog("Vor dem Speichern: geschätzte Datenmenge ~" + usedKB + " KB, neuer Buchtext: " + newText.length + " Zeichen.");
+    }catch(e){}
+    const ok = persistBookProgress();
+    dlog("Speichern " + (ok===false ? "FEHLGESCHLAGEN" : "erfolgreich"));
     showView("view-reader");
     requestAnimationFrame(()=>{ requestAnimationFrame(rebuildPagination); });
   });
@@ -1724,7 +2185,7 @@
     settings.theme = btn.dataset.val;
     document.documentElement.setAttribute("data-theme", settings.theme);
     document.getElementById("seg-theme").querySelectorAll("button").forEach(b=>b.classList.toggle("active", b===btn));
-    rebuildPagination();
+    rebuildPaginationWithIndicator();
   });
   document.getElementById("seg-mode").addEventListener("click", e=>{
     const btn = e.target.closest("button"); if(!btn) return;
@@ -1735,13 +2196,47 @@
   });
   document.getElementById("fontsize-range").addEventListener("input", e=>{
     settings.fontSize = parseInt(e.target.value,10);
-    rebuildPagination();
+    rebuildPaginationWithIndicator();
+  });
+  document.getElementById("seg-font").addEventListener("click", e=>{
+    const btn = e.target.closest("button"); if(!btn) return;
+    settings.fontFamily = btn.dataset.val;
+    document.getElementById("seg-font").querySelectorAll("button").forEach(b=>b.classList.toggle("active", b===btn));
+    rebuildPaginationWithIndicator();
+  });
+  document.getElementById("lineheight-range").addEventListener("input", e=>{
+    settings.lineHeight = parseFloat(e.target.value);
+    rebuildPaginationWithIndicator();
+  });
+  document.getElementById("margin-range").addEventListener("input", e=>{
+    settings.margin = parseInt(e.target.value,10);
+    rebuildPaginationWithIndicator();
+  });
+  document.getElementById("btn-goto-page").addEventListener("click", ()=>{
+    if(!currentBook) return;
+    const pages = currentBook.pagesFlip || [""];
+    const n = parseInt(document.getElementById("goto-page-input").value, 10);
+    if(!n || n < 1 || n > pages.length){
+      showAlertModal(`Bitte eine Seitenzahl zwischen 1 und ${pages.length} eingeben.`);
+      return;
+    }
+    closeSheet();
+    const idx = n - 1;
+    if(settings.mode === "flip"){
+      renderFlipPage(idx);
+    } else {
+      renderScrollPages();
+      const el = document.getElementById("scrollpage");
+      const target = el.querySelectorAll(".sp-page")[idx];
+      if(target) target.scrollIntoView({block:"start"});
+      currentBook.currentPage = idx;
+      updateIndicator();
+    }
   });
   document.getElementById("btn-delete-book").addEventListener("click", ()=>{
     if(!currentBook) return;
-    showConfirmModal(`"${currentBook.title}" wirklich löschen?`, "Löschen", ()=>{
-      books = books.filter(b=>b.id!==currentBook.id);
-      saveBooks(books);
+    showConfirmModal(`"${currentBook.title}" in den Papierkorb verschieben?`, "Löschen", ()=>{
+      moveBookToTrash(currentBook.id);
       closeSheet();
       showView("view-library");
       renderShelf();
@@ -2028,6 +2523,7 @@
   });
 
   /* ---------------- Init ---------------- */
+  purgeOldTrash();
   renderShelf();
 
   /* ---------------- Offline-Fähigkeit (PWA) ---------------- */
